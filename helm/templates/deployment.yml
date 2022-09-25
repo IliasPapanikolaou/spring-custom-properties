@@ -25,17 +25,17 @@ spec:
               cpu: "500m"
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: actuator/health
               port: 8080
-            initialDelaySeconds: 0
+            initialDelaySeconds: 5
             timeoutSeconds: 1
             failureThreshold: 3
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: actuator/health
               port: 8080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             timeoutSeconds: 1
             failureThreshold: 3
             periodSeconds: 10
