@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.4</version>
+        <version>2.6.12</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.unipi</groupId>
@@ -14,14 +14,14 @@
     <name>spring-custom-properties</name>
     <description>spring-custom-properties</description>
     <properties>
-        <java.version>19</java.version>
+        <java.version>17</java.version>
+        <image>iliaspap/${project.artifactId}:${project.version}</image>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -32,6 +32,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -39,6 +44,47 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Jib Plugin -->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.1.4</version>
+                <configuration>
+                    <from>
+                        <!-- https://hub.docker.com/_/eclipse-temurin/ -->
+                        <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
+                        <platforms>
+                            <platform>
+                                <architecture>amd64</architecture>
+                                <os>linux</os>
+                            </platform>
+                            <!-- <platform> -->
+                            <!-- <architecture>arm64</architecture> -->
+                            <!-- <os>linux</os> -->
+                            <!-- </platform> -->
+                        </platforms>
+                    </from>
+                    <to>
+                        <!-- Moved to properties -->
+                        <!-- <image></image> -->
+                        <tags>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                    <container>
+                        <creationTime>${maven.build.timestamp}</creationTime>
+                    </container>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <!-- Pushes the build to DockerHub, for local build only use goal: dockerBuild -->
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
