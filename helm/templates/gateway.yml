@@ -4,7 +4,7 @@ metadata:
   name: spring-gateway
 spec:
   selector:
-    istio: istio-ingress # use Istio default gateway implementation
+    istio: ingressgateway  # use Istio default gateway implementation
   servers:
     - port:
         number: 80
