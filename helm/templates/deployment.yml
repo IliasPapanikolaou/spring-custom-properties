@@ -18,7 +18,7 @@ spec:
       containers:
         - name: spring-custom-properties
           image: iliaspap/spring-custom-properties:latest
-          imagePullPolicy: IfNotPresent #Always
+          imagePullPolicy: Always #IfNotPresent
           resources:
             limits:
               memory: "128Mi"
@@ -31,14 +31,14 @@ spec:
             timeoutSeconds: 1
             failureThreshold: 3
             periodSeconds: 5
-            readinessProbe:
-              httpGet:
-                path: actuator/health
-                port: 8080
-              initialDelaySeconds: 10
-              timeoutSeconds: 1
-              failureThreshold: 3
-              periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+            periodSeconds: 5
           ports:
             - containerPort: 8080
 ---
